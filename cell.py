@@ -12,6 +12,7 @@ class Cell:
         self.__y1 = -1
         self.__y2 = -1
         self.__win = window
+        self.visited = False
 
     def draw(self, x1, y1, x2, y2):
         self.__x1 = x1
@@ -22,18 +23,26 @@ class Cell:
         top_right = Point(self.__x2, self.__y1)
         bottom_left = Point(self.__x1, self.__y2)
         bottom_right = Point(self.__x2, self.__y2)
+        left_wall = Line(top_left, bottom_left)
+        top_wall = Line(top_left, top_right)
+        right_wall = Line(top_right, bottom_right)
+        bottom_wall = Line(bottom_left, bottom_right)
         if self.has_left_wall:
-            left_wall = Line(top_left, bottom_left)
             self.__win.draw_line(left_wall)
+        else:
+            self.__win.draw_line(left_wall, "white")
         if self.has_top_wall:
-            top_wall = Line(top_left, top_right)
             self.__win.draw_line(top_wall)
+        else:
+            self.__win.draw_line(top_wall, "white")
         if self.has_right_wall:
-            right_wall = Line(top_right, bottom_right)
             self.__win.draw_line(right_wall)
+        else:
+            self.__win.draw_line(right_wall, "white")
         if self.has_bottom_wall:
-            bottom_wall = Line(bottom_left, bottom_right)
             self.__win.draw_line(bottom_wall)
+        else:
+            self.__win.draw_line(bottom_wall, "white")
 
     def draw_move(self, to_cell, undo=False):
         if not undo:
